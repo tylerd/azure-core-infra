@@ -20,6 +20,19 @@ resource "azurerm_key_vault" "keyvault" {
   purge_protection_enabled   = false
 
   sku_name = "standard"
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+
+    certificate_permissions = [
+      "DeleteIssuers",
+      "GetIssuers",
+      "ListIssuers",
+      "ManageIssuers",
+      "SetIssuers",
+    ]
+  }
 }
 
 resource "azurerm_key_vault_certificate_issuer" "digicert_issuer" {
