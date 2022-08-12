@@ -21,3 +21,12 @@ resource "azurerm_key_vault" "keyvault" {
 
   sku_name = "standard"
 }
+
+resource "azurerm_key_vault_certificate_issuer" "digicert_issuer" {
+  name          = "digicert-issuer"
+  org_id        = var.digicert_org_id
+  key_vault_id  = azurerm_key_vault.keyvault.id
+  provider_name = "DigiCert"
+  account_id    = var.digicert_account_id
+  password      = var.digicert_api_key
+}
